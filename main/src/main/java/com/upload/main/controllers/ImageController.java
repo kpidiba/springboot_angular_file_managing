@@ -29,7 +29,7 @@ import java.io.File;
 
 @RestController
 @RequestMapping("/api/v1/images")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class ImageController {
     private ImageService imageService;
     private FileUploadUtils fileUploadUtils;
