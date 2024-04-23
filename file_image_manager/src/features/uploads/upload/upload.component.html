@@ -1,0 +1,28 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+    <mat-card>
+        <mat-card-content>
+            <h2>IMAGE UPLOAD</h2>
+            <form [formGroup]="registerFile" enctype="multipart/form-data">
+                <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+                <input hidden (change)="onFileSelected($event)" [ngClass]="{ 'is-invalid': fileControl.errors?.['required']  }" #fileInput type="file" accept="image/png, image/gif, image/jpeg">
+                <br>
+                
+                <br/>
+                <div *ngIf="fileControl.invalid && selectedFileName" >
+                    <mat-error *ngIf="fileControl.errors?.['required']">
+                        VEUILLEZ SELECTIONNER UN FICHIER
+                    </mat-error>
+                    <mat-error *ngIf="fileControl.errors?.['invalidFileType']">
+                        FORMAT DU FICHIER INCORRECT
+                    </mat-error>
+                </div>
+                <!-- Image Preview -->
+                <img *ngIf="selectedFileName "  style="width: 400px; height: 400px;" [src]="imagePreview" alt="Selected Image" class="preview-image" />
+                <br>
+                <span class="file-name">{{ selectedFileName?selectedFileName:"No File Selected" }}</span>
+                <br/>    
+                <button (click)="upload()" mat-raised-button color="primary" [disabled]="registerFile.invalid">Upload</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

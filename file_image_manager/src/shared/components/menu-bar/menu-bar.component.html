@@ -1,0 +1,67 @@
+<mat-toolbar color="primary" class="mat-elevation-z8">
+  <button (click)="drawer.toggle()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span> IMAGE AND FILE MANAGER</span>
+  <span class="example-spacer"></span>
+  <button mat-button routerLink="/">HOME</button>
+  <button [matMenuTriggerFor]="upload" mat-button>
+    <mat-icon>upload</mat-icon>
+    UPLOAD IMAGE
+  </button>
+  <mat-menu #upload="matMenu">
+    <button routerLink="/dashboard/upload" mat-menu-item>UPLOAD SIMPLE</button>
+    <button routerLink="/dashboard/upload/crop" mat-menu-item>UPLOAD CROP</button>
+  </mat-menu>
+  <button mat-button routerLink="/">
+    <mat-icon>collections</mat-icon>
+    GALLERY
+  </button>
+  <button mat-button routerLink="/dashboard/images/list">
+    <mat-icon>list</mat-icon>
+    LIST
+  </button>
+</mat-toolbar>
+<mat-drawer-container autosize>
+  <mat-drawer #drawer opened="true" mode="side">
+    <mat-nav-list>
+      <mat-list-item>
+        <button mat-button>
+          <mat-icon>dashboard</mat-icon>
+          DASHBOARD
+        </button>
+
+      </mat-list-item>
+      <mat-expansion-panel [class.mat-elevation-z0]="true">
+        <mat-expansion-panel-header>
+            PDFS
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="#">
+            <span>UPLOAD</span>
+          </a>
+         
+        </mat-nav-list>
+        <mat-nav-list>
+          <a mat-list-item routerLink="#">
+            <span>LIST</span>
+          </a>
+         
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-list-item>
+        <button mat-button>
+          <mat-icon>file_copy</mat-icon>
+          FILES
+        </button>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+
+
+  <mat-drawer-content>
+    <div class="main-content" style="text-align: center;">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
