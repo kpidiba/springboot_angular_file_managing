@@ -25,7 +25,7 @@ public class AttachementController {
         this.attachementService = attachementService;
     }
 
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public AttachementResponse uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
         Attachement attachement = null;
         String downloadURL = "";
