@@ -40,15 +40,27 @@ public class ImageController {
         this.imageService = service;
     }
 
-    @GetMapping(value = "")
+    @GetMapping
     public ResponseEntity<List<ImageDTO>> getIMages() {
         return ResponseEntity.ok(this.imageService.getAll());
     }
 
+    /**
+     * Handles the upload of an image file and saves the image in the database.
+     *
+     * @param  file  the file to upload
+     * @return       a response entity with an upload API response
+     * @throws Exception if an error occurs during the file upload
+     */
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UploadApiResponse> uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
+        // Upload the image file
         String name = this.fileUploadUtils.uploadImage(file);
+        
+        // Save the image details in the database
         this.imageService.saveImage(new Image(name, file.getSize()));
+        
+        // Return a success response with the image name
         return ResponseEntity.ok(new UploadApiResponse("upload success", name));
     }
 
@@ -84,17 +96,28 @@ public class ImageController {
         return ResponseEntity.ok(image);
     }
 
-    // NOTE:MULTI PARAMETERS
+    /**
+     * Uploads a file with multiple parameters.
+     * 
+     * @param name  The name of the user.
+     * @param email The email of the user.
+     * @param file  The file to upload.
+     * @return      A response entity with an upload API response.
+     * @throws Exception If an error occurs during the file upload.
+     */
     @PostMapping(value = "/upload/api/param")
     public ResponseEntity<UploadApiResponse> uploadFileParam(@RequestParam("name") String name,
             @RequestParam("email") String email,
             @RequestParam("file") MultipartFile file) throws Exception {
-        // NOTE: UPLOAD FILE INFORMATIONS
+        // Print file information
         System.out.println("name: " + file.getName());
         System.out.println("size: " + file.getSize());
         System.out.println("Original File name: " + file.getOriginalFilename());
         System.out.println("content Type: " + file.getContentType());
+        
+        // Return a success response
         return ResponseEntity.ok(new UploadApiResponse("upload success", ""));
     }
+
 
 }
